@@ -17,7 +17,6 @@ else:
 # Mount the static directory
 app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
-
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
@@ -27,17 +26,21 @@ app.add_middleware(
     allow_headers=["*"],  # Allows all headers
 )
 
-@app.get("/")
+
+@app.api_route('/', methods=['GET', 'HEAD'])
 async def read_root():
     return FileResponse(os.path.join(static_dir, "index.html"))
 
-@app.head("/")
-async def uptime():
-    return Response(headers={"X-Custom-Header": "Some Value"})
+
+# @app.head("/")
+# async def uptime():
+#     return Response(status_code=200)
+
 
 @app.get("/echo/{message}")
 async def echo(message: str):
     return {"message": message}
+
 
 if __name__ == "__main__":
     import uvicorn
