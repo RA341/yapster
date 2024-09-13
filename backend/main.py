@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.openapi.models import Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -29,6 +30,10 @@ app.add_middleware(
 @app.get("/")
 async def read_root():
     return FileResponse(os.path.join(static_dir, "index.html"))
+
+@app.head("/")
+async def uptime():
+    return Response(headers={"X-Custom-Header": "Some Value"})
 
 @app.get("/echo/{message}")
 async def echo(message: str):

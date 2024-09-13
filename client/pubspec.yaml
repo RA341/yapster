@@ -25,6 +25,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+  flutter_sound: ^9.15.61
   riverpod: ^2.5.1
   cupertino_icons: ^1.0.8
   dio: ^5.7.0

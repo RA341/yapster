@@ -1,4 +1,4 @@
-import 'package:client/api.dart';
+import 'package:client/service/api.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,8 +11,9 @@ Future<void> main() async {
   } else {
     if (kIsWeb) {
       basePath = html.window.location.href;
+    } else {
+      basePath = 'https://yap.dumbapps.org';
     }
-    basePath = 'http://localhost:8000';
   }
 
   if (basePath.endsWith('/')) {
