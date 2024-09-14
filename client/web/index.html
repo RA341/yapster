@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <!--
     If you are serving your web app in a path other than the root, change the
@@ -27,12 +28,70 @@
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
+  <link rel="icon" type="image/png" href="favicon.png" />
 
   <title>client</title>
   <link rel="manifest" href="manifest.json">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+    }
+
+    #loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      width: 100vw;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: rgb(5, 5, 5);
+      z-index: 9999;
+      opacity: 1;
+      transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+    }
+
+    #loading.fade-out {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    #flutter-target {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
 </head>
+
 <body>
+  <div id="loading">
+    <img src="icons/mictest.gif" alt="loading">
+  </div>
+  <script>
+    var loadingElement = document.getElementById('loading');
+
+    function hideLoading() {
+      loadingElement.classList.add('fade-out');
+      // Remove the loading element from the DOM after the transition
+      setTimeout(() => {
+        loadingElement.style.display = 'none';
+      }, 400); // This should match the transition duration in CSS
+    }
+
+    window.addEventListener("flutter-first-frame", function () {
+      var element = document.getElementsByClassName("loading");
+      hideLoading();
+    });
+  </script>
+
   <script src="flutter_bootstrap.js" async></script>
 </body>
+
 </html>
