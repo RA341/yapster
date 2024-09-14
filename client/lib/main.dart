@@ -1,10 +1,29 @@
 import 'package:client/service/api.dart';
+import 'package:client/service/microphone_manager.dart';
 import 'package:client/utils.dart';
+import 'package:client/widgets/mic_controls.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // try {
+  //   await Future.delayed(const Duration(seconds: 2));
+  // } catch (e) {
+  //   print(e);
+  //   print('first try did not work, disposing');
+  //   await micMan.dispose();
+  //   await Future.delayed(const Duration(seconds: 2));
+  //   try {
+  //     micMan.init();
+  //   } catch (e) {
+  //     print('second try did not work');
+  //     await micMan.dispose();
+  //   }
+  // }
+
   setupApiPath();
 
   runApp(const ProviderScope(
@@ -35,15 +54,9 @@ class App extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final echo = ref.watch(echoPointProvider('hello'));
-
-    return Scaffold(
+    return const Scaffold(
       body: Center(
-        child: echo.when(
-          data: (data) => Text(data),
-          error: (error, stackTrace) => Text(error.toString()),
-          loading: () => const CircularProgressIndicator(),
-        ),
+        child: MicControls(),
       ),
     );
   }

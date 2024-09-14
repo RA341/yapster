@@ -15,3 +15,8 @@ build flutter web
 flutter build web --base-href=/static/
 ```
 
+expose pip
+
+```bash
+ pip freeze > backend/requirements.txt 
+```
