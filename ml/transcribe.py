@@ -27,7 +27,7 @@ from datasets import Audio, Dataset
 for filename in testing:
     name, extension = os.path.splitext(filename)
     transcript = transcripts[name]
-    testing_dataset[filename] = transcript
+    testing_dataset[name] = transcript
     transcripts.pop(name)
 
 training_dataset = transcripts
@@ -55,10 +55,10 @@ def convert_dataset(audio_dir, dataset_dict):
 
 
 training_dataset = convert_dataset('dataset/Training', training_dataset)
-testing_dataset = convert_dataset('dataset/Training', testing_dataset)
+testing_dataset = convert_dataset('dataset/Testing', testing_dataset)
 
-print(training_dataset["audio"][0]['path'])
-print()
+# print(training_dataset["audio"][0]['path'])
+# print()
 # %%
 from transformers import WhisperTokenizer, WhisperFeatureExtractor
 
@@ -80,6 +80,7 @@ def prepare_dataset(batch):
 
 
 training_dataset = training_dataset.map(prepare_dataset, num_proc=1)
+testing_dataset = testing_dataset.map(prepare_dataset, num_proc=1)
 print('complete mapping')
 
 # %%
@@ -196,3 +197,12 @@ trainer = Seq2SeqTrainer(
 )
 
 trainer.train()
+
+# save the model
+save_directory = "complete/whisper-finetuned"
+import os
+os.makedirs(save_directory, exist_ok=True)
+
+trainer.save_model(save_directory)
+
+processor.save_pretrained(save_directory)
