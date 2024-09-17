@@ -8,17 +8,19 @@ import 'package:http/http.dart' as http;
 
 final api = ApiService();
 
+const failedString = '[[[[[[failed]]]]]]';
+const emptyResultString = '=====++++++[[[[[[empty]]]]]]';
+
 class ApiService {
   static final ApiService _instance = ApiService._internal();
   String basePath;
-  late final Dio dio;
+  final dio = Dio();
 
   factory ApiService() {
     return _instance;
   }
 
   void init(String basePath) {
-    _instance.dio = Dio();
     _instance.basePath = basePath;
   }
 
@@ -34,9 +36,30 @@ class ApiService {
     }
   }
 
-  Future<String> uploadBlobUrlToServer(String blobUrl) async {
-    final dio = Dio();
+  Future<String> getJobStatus({
+    required String jobId,
+    required String whichJob,
+  }) async {
+    final response = await dio.get('$basePath/$whichJob/$jobId');
+    print(whichJob);
+    print(response.data);
+    final status = response.data['status'] as String;
+    final result = response.data['result'] as String;
 
+    if (status == 'completed') {
+      if (result.isEmpty) {
+        return emptyResultString;
+      }
+      return result;
+    }
+    if (status == 'failed') {
+      return failedString;
+    }
+
+    return '';
+  }
+
+  Future<String> uploadBlobUrlToServer(String blobUrl) async {
     try {
       // 1. Fetch the blob from the blob URL
       final response = await dio.getUri(Uri.parse(blobUrl));

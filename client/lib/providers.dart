@@ -1,3 +1,4 @@
+import 'package:client/service/api.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // url and transcription provider
@@ -11,14 +12,18 @@ final jobIdProvider = StateProvider<String>((ref) {
 
 ///////////////////////////////////////////////////////////////////////////
 // api calls
-final uploadRecording = FutureProvider<String>((ref) async {
-  return '';
+final transcriptionStatusProvider = FutureProvider.autoDispose<String>((ref) async {
+  final jobId = ref.read(jobIdProvider);
+  if (jobId.isEmpty) {
+    return '';
+  }
+  return api.getJobStatus(jobId: jobId, whichJob: 'transcription');
 });
 
-final transcriptionProvider = FutureProvider<String>((ref) async {
-  return '';
-});
-
-final genderProvider = FutureProvider<String>((ref) async {
-  return '';
+final genderStatusProvider = FutureProvider.autoDispose<String>((ref) async {
+  final jobId = ref.read(jobIdProvider);
+  if (jobId.isEmpty) {
+    return '';
+  }
+  return api.getJobStatus(jobId: jobId, whichJob: 'gender');
 });

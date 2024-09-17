@@ -40,6 +40,8 @@ class _MicControlsState extends ConsumerState<MicControls> {
   Future<void> stopRecording() async {
     final url = await recorder.stopRecorder() ?? '';
     ref.read(recordingUrlProvider.notifier).state = url;
+    // clear for next job id
+    ref.read(jobIdProvider.notifier).state = '';
     setState(() {});
     print(url);
 
