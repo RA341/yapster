@@ -3,6 +3,7 @@ import 'package:client/utils.dart';
 import 'package:client/widgets/discard_button.dart';
 import 'package:client/widgets/info_display.dart';
 import 'package:client/widgets/mic_controls.dart';
+import 'package:client/widgets/player.dart';
 import 'package:client/widgets/upload_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -74,6 +75,7 @@ class App extends ConsumerWidget {
                   UploadButton(),
                 ],
               ),
+              RecordingPlayer()
             ],
           ),
         ),
