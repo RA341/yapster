@@ -21,7 +21,11 @@ class DiscardButton extends ConsumerWidget {
         children: [
           IconButton(
             icon: const Icon(Icons.cancel),
-            onPressed: recordingUrl.isEmpty ? null : () {},
+            onPressed: recordingUrl.isEmpty
+                ? null
+                : () {
+                    ref.read(recordingUrlProvider.notifier).state = '';
+                  },
           ),
           const Text('Discard Audio')
         ],

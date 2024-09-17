@@ -34,7 +34,7 @@ class ApiService {
     }
   }
 
-  Future<String> uploadBlobUrlToServer(String blobUrl, String uploadUrl) async {
+  Future<String> uploadBlobUrlToServer(String blobUrl) async {
     final dio = Dio();
 
     try {
@@ -55,7 +55,7 @@ class ApiService {
         });
 
         final uploadResponse = await dio.post(
-          uploadUrl,
+          '$basePath/upload',
           data: formData,
           options: Options(headers: {"Content-Type": "multipart/form-data"}),
         );

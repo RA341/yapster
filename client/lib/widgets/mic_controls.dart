@@ -43,9 +43,7 @@ class _MicControlsState extends ConsumerState<MicControls> {
     setState(() {});
     print(url);
 
-    api.uploadBlobUrlToServer(url, 'http://localhost:8000/upload');
-
-    await player.startPlayer(codec: Codec.opusWebM, fromURI: url);
+    // await player.startPlayer(codec: Codec.opusWebM, fromURI: url);
   }
 
   @override

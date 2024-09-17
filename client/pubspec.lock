@@ -238,6 +238,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.5.0"
+  flutter_hooks:
+    dependency: "direct main"
+    description:
+      name: flutter_hooks
+      sha256: cde36b12f7188c85286fba9b38cc5a902e7279f36dd676967106c041dc9dde70
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.20.5"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -271,7 +279,7 @@ packages:
     source: hosted
     version: "9.15.61"
   flutter_sound_platform_interface:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: flutter_sound_platform_interface
       sha256: "82bf39c440f608c45a42e80ee3c79f0934999d824a6464646da4a9f948778769"
@@ -279,7 +287,7 @@ packages:
     source: hosted
     version: "9.15.61"
   flutter_sound_web:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: flutter_sound_web
       sha256: "3652fd0272db733fac49fe9958a7c4247945040db32c5285fbbdb2f3cfc98b32"
@@ -312,6 +320,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.2"
+  hooks_riverpod:
+    dependency: "direct main"
+    description:
+      name: hooks_riverpod
+      sha256: "97266a91c994951a06ef0ff3a1c7fb261e52ec7f74e87f0614ea0b7411b859b2"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.5.2"
   hotreloader:
     dependency: transitive
     description:
