@@ -1,5 +1,10 @@
+import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'dart:typed_data';
+import 'package:universal_html/html.dart' as html;
+import 'package:http/http.dart' as http;
 
 final api = ApiService();
 
@@ -26,6 +31,50 @@ class ApiService {
       return resp.data?["message"] ?? "Null response";
     } else {
       return 'No response';
+    }
+  }
+
+  Future<String> uploadBlobUrlToServer(String blobUrl, String uploadUrl) async {
+    final dio = Dio();
+
+    try {
+      // 1. Fetch the blob from the blob URL
+      final response = await dio.getUri(Uri.parse(blobUrl));
+      // print(response.data);
+      if (response.statusCode == 200) {
+        final uri = Uri.parse(blobUrl);
+        final client = http.Client();
+        final request = await client.get(uri);
+        final bytes = request.bodyBytes;
+
+        FormData formData = FormData.fromMap({
+          "audio_file": MultipartFile.fromBytes(
+            bytes,
+            filename: "userfile.webm", // You can set an appropriate filename
+          ),
+        });
+
+        final uploadResponse = await dio.post(
+          uploadUrl,
+          data: formData,
+          options: Options(headers: {"Content-Type": "multipart/form-data"}),
+        );
+
+        if (uploadResponse.statusCode == 200 && uploadResponse.data != null) {
+          print("Blob uploaded successfully");
+          final res = uploadResponse.data;
+          return res['job_id'] as String;
+        } else {
+          print("Failed to upload blob: ${uploadResponse.statusCode}");
+          return '';
+        }
+      } else {
+        print("Failed to download blob: ${response.statusCode}");
+        return '';
+      }
+    } catch (e) {
+      print('Error uploading file: $e');
+      return '';
     }
   }
 }
