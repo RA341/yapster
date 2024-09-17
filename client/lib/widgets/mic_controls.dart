@@ -6,6 +6,8 @@ import 'package:client/service/api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_sound/flutter_sound.dart';
+import 'package:universal_html/html.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class MicControls extends ConsumerStatefulWidget {
   const MicControls({super.key});
@@ -32,7 +34,26 @@ class _MicControlsState extends ConsumerState<MicControls> {
     super.dispose();
   }
 
-  Future<void> startRecording() async {
+  Future<void> startRecording(BuildContext context) async {
+    var status = await Permission.microphone.request();
+    if (status.isDenied || status.isPermanentlyDenied) {
+      if (!context.mounted) return;
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Microphone Permission denied'),
+          content: const Text('Please allow microphone to use the app'),
+          actions: [
+            ElevatedButton(
+              onPressed: Navigator.of(context).pop,
+              child: const Text('OK'),
+            )
+          ],
+          actionsAlignment: MainAxisAlignment.center,
+        ),
+      );
+    }
+
     await recorder.startRecorder(toFile: 'tmp.webm', codec: Codec.opusWebM);
     setState(() {});
   }
@@ -44,8 +65,6 @@ class _MicControlsState extends ConsumerState<MicControls> {
     ref.read(jobIdProvider.notifier).state = '';
     setState(() {});
     print(url);
-
-    // await player.startPlayer(codec: Codec.opusWebM, fromURI: url);
   }
 
   @override
@@ -84,7 +103,7 @@ class _MicControlsState extends ConsumerState<MicControls> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         IconButton(
-                          onPressed: () async => await startRecording(),
+                          onPressed: () async => await startRecording(context),
                           icon: const Icon(Icons.mic),
                         ),
                         const Text('Record')
