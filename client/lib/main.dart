@@ -3,7 +3,6 @@ import 'package:client/utils.dart';
 import 'package:client/widgets/discard_button.dart';
 import 'package:client/widgets/info_display.dart';
 import 'package:client/widgets/mic_controls.dart';
-import 'package:client/widgets/player.dart';
 import 'package:client/widgets/upload_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,10 +10,6 @@ import 'package:flutter_animate/flutter_animate.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  // important keep this in it allows the
-  // flutter sound files to be fully downloaded
-  // await Future.delayed(const Duration(seconds: 1));
   await micMan.init();
 
   setupApiPath();
@@ -85,11 +80,10 @@ class App extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   DiscardButton(),
-                  MicControls(),
-                  UploadButton(),
+                  MicTrackControls(),
+                  UploadAndAnalyzeButton(),
                 ],
               ),
-              RecordingPlayer()
             ],
           ),
         ),

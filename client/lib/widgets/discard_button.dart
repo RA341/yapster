@@ -1,3 +1,4 @@
+import 'package:client/consts.dart';
 import 'package:client/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,7 +14,7 @@ class DiscardButton extends ConsumerWidget {
       width: 150,
       height: 100,
       decoration: BoxDecoration(
-        color: Colors.purple,
+        color: outerDialogBox,
         borderRadius: BorderRadius.circular(20),
       ),
       child: Column(

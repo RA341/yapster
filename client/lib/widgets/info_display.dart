@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:client/consts.dart';
 import 'package:client/providers.dart';
 import 'package:client/service/api.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class InfoDisplay extends ConsumerWidget {
         width: 600,
         height: 320,
         decoration: BoxDecoration(
-          color: Colors.purple,
+          color: outerDialogBox,
           borderRadius: BorderRadius.circular(20),
         ),
         child: jobId.isEmpty
@@ -36,7 +37,7 @@ class InfoDisplay extends ConsumerWidget {
                     child: Container(
                       width: 300,
                       decoration: BoxDecoration(
-                        color: Colors.blueAccent,
+                        color: genderBoxColor,
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: const Center(
@@ -53,7 +54,7 @@ class InfoDisplay extends ConsumerWidget {
                       width: 575,
                       height: 220,
                       decoration: BoxDecoration(
-                        color: Colors.blueAccent,
+                        color: transcriptionBoxColor,
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: const Center(
@@ -102,31 +103,32 @@ class _TranscriptionViewState extends ConsumerState<TranscriptionView> {
     return transcription.when(
       data: (data) {
         if (data.isEmpty) {
-          return const Text('transcribing, get a coffee')
+          return generateText('transcribing, get a coffee')
               .animate()
               .fadeIn()
               .shimmer(duration: 200.ms, size: 20);
         } else if (data == failedString) {
           timer.cancel();
-          return const Text('Error transcribing, try again')
+          return generateText('Error transcribing, try again')
               .animate()
               .fadeIn()
               .shimmer(duration: 200.ms);
         } else if (data == emptyResultString) {
           timer.cancel();
-          return const Text(
+          return generateText(
                   'No transcription retrieved, your yaps were too powerful')
               .animate()
               .fadeIn();
         }
         timer.cancel();
-        return SingleChildScrollView(child: Text(data).animate().fadeIn())
+        return SingleChildScrollView(
+                child: generateText(data).animate().fadeIn())
             .animate()
             .fadeIn();
       },
-      error: (error, stackTrace) => Text('Error transcribing\n$error'),
+      error: (error, stackTrace) => generateText('Error transcribing\n$error'),
       loading: () {
-        return const Text('transcribing, get a coffee')
+        return generateText('transcribing, get a coffee')
             .animate()
             .fadeIn()
             .shimmer(duration: 200.ms);
@@ -166,34 +168,44 @@ class _GenderAnalysisState extends ConsumerState<GenderAnalysis> {
     return gender.when(
       data: (data) {
         if (data.isEmpty) {
-          return const Text("Analyzing gender, what's for dinner")
+          return generateText("Analyzing gender, what's for dinner")
               .animate()
               .fadeIn()
               .shimmer(duration: 200.ms, size: 20);
         } else if (data == failedString) {
           timer.cancel();
-          return const Text('Error transcribing, try again')
+          return generateText('Error transcribing, try again')
               .animate()
               .fadeIn()
               .shimmer(duration: 200.ms);
         } else if (data == emptyResultString) {
           timer.cancel();
-          return const Text('No gender detected, you sure you are not a robot')
+          return generateText('No gender detected\nYou a bot ?')
               .animate()
               .fadeIn();
         }
         timer.cancel();
-        return SingleChildScrollView(child: Text(data).animate().fadeIn())
+        return SingleChildScrollView(
+                child: generateText(data).animate().fadeIn())
             .animate()
             .fadeIn();
       },
-      error: (error, stackTrace) => Text('Error analyzing gender\n$error'),
+      error: (error, stackTrace) =>
+          generateText('Error analyzing gender\n$error'),
       loading: () {
-        return const Text("Analyzing gender, what's for dinner")
+        return generateText("Analyzing gender, what's for dinner")
             .animate()
             .fadeIn()
             .shimmer(duration: 200.ms);
       },
     );
   }
+}
+
+Widget generateText(String data) {
+  return Text(
+    data,
+    textAlign: TextAlign.center,
+    style: const TextStyle(color: Colors.black),
+  );
 }

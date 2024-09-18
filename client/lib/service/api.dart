@@ -2,8 +2,6 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'dart:typed_data';
-import 'package:universal_html/html.dart' as html;
 import 'package:http/http.dart' as http;
 
 final api = ApiService();
@@ -46,17 +44,18 @@ class ApiService {
     final status = response.data['status'] as String;
     final result = response.data['result'] as String;
 
-    if (status == 'completed') {
+    if (status == 'queued' || status == 'running') {
+      return '';
+    } else if (status == 'failed') {
+      return failedString;
+    } else if (status == 'completed') {
       if (result.isEmpty) {
         return emptyResultString;
       }
       return result;
     }
-    if (status == 'failed') {
-      return failedString;
-    }
 
-    return '';
+    return emptyResultString;
   }
 
   Future<String> uploadBlobUrlToServer(String blobUrl) async {
