@@ -24,7 +24,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_sound: ^9.15.61
+  flutter_sound: ^9.16.0
+  flutter_sound_web: ^9.16.0
   riverpod: ^2.5.1
   flutter_hooks:
   cupertino_icons: ^1.0.8

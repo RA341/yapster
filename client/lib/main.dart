@@ -14,7 +14,7 @@ Future<void> main() async {
 
   // important keep this in it allows the
   // flutter sound files to be fully downloaded
-  await Future.delayed(const Duration(seconds: 1));
+  // await Future.delayed(const Duration(seconds: 1));
   await micMan.init();
 
   setupApiPath();
@@ -53,17 +53,31 @@ class App extends ConsumerWidget {
           child: Column(
             children: [
               Padding(
-                padding: EdgeInsets.all(20),
+                padding: EdgeInsets.all(15),
                 child: Text(
                   'Welcome to Yapster',
-                  style: TextStyle(fontSize: 50),
+                  style: TextStyle(fontSize: 40),
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(bottom: 20),
-                child: Text(
-                  'Yap something',
-                  style: TextStyle(fontSize: 25),
+                padding: EdgeInsets.only(bottom: 15),
+                child: Column(
+                  children: [
+                    Text(
+                      'Yap something',
+                      style: TextStyle(fontSize: 25),
+                      maxLines: 2,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 12),
+                      child: Text(
+                        'not so state of the art machine learning models will attempt\n to detect your gender and transcribe what you say',
+                        style: TextStyle(fontSize: 18),
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               InfoDisplay(),

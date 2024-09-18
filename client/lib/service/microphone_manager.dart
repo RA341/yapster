@@ -1,6 +1,7 @@
 import 'package:flutter_sound/public/flutter_sound_player.dart';
 import 'package:flutter_sound/public/flutter_sound_recorder.dart';
 import 'package:logger/logger.dart';
+import 'package:flutter_sound_web/flutter_sound_web.dart' show FlutterSoundPlugin;
 
 final micMan = MicrophoneManager();
 
@@ -17,6 +18,7 @@ class MicrophoneManager {
   final recorder = FlutterSoundRecorder(logLevel: Level.off);
 
   Future<void> init() async {
+    await FlutterSoundPlugin.ScriptLoaded.future;
     await player.openPlayer();
     await recorder.openRecorder();
   }
