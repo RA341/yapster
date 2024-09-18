@@ -5,7 +5,7 @@ import os
 import torch
 
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
-print(device)
+print('device is', device)
 
 transcripts = {}
 
@@ -62,9 +62,11 @@ testing_dataset = convert_dataset('dataset/Testing', testing_dataset)
 # %%
 from transformers import WhisperTokenizer, WhisperFeatureExtractor
 
-feature_extractor = WhisperFeatureExtractor.from_pretrained("openai/whisper-small")
+base_model = "openai/whisper-medium"
 
-tokenizer = WhisperTokenizer.from_pretrained("openai/whisper-small", language="English", task="transcribe")
+feature_extractor = WhisperFeatureExtractor.from_pretrained(base_model)
+
+tokenizer = WhisperTokenizer.from_pretrained(base_model, language="English", task="transcribe")
 
 
 def prepare_dataset(batch):
@@ -124,9 +126,9 @@ class DataCollatorSpeechSeq2SeqWithPadding:
         return batch
 
 
-processor = WhisperProcessor.from_pretrained("openai/whisper-small", language="English", task="transcribe")
+processor = WhisperProcessor.from_pretrained(base_model, language="English", task="transcribe")
 
-model = WhisperForConditionalGeneration.from_pretrained("openai/whisper-small")
+model = WhisperForConditionalGeneration.from_pretrained(base_model)
 
 model.generation_config.language = "English"
 model.generation_config.task = "transcribe"
@@ -162,7 +164,7 @@ def compute_metrics(pred):
 from transformers import Seq2SeqTrainingArguments
 
 training_args = Seq2SeqTrainingArguments(
-    output_dir="./model/whisper-small-hi",  # change to a repo name of your choice
+    output_dir="./model/training",  # change to a repo name of your choice
     per_device_train_batch_size=16,
     gradient_accumulation_steps=1,  # increase by 2x for every 2x decrease in batch size
     learning_rate=1e-5,
@@ -196,10 +198,13 @@ trainer = Seq2SeqTrainer(
     tokenizer=processor.feature_extractor,
 )
 
+
+processor.save_pretrained(training_args.output_dir)
+
 trainer.train()
 
 # save the model
-save_directory = "complete/whisper-finetuned"
+save_directory = "model/whisper-finetuned"
 import os
 os.makedirs(save_directory, exist_ok=True)
 
