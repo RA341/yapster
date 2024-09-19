@@ -104,9 +104,10 @@ class _TranscriptionViewState extends ConsumerState<TranscriptionView> {
       data: (data) {
         if (data.isEmpty) {
           return generateText('transcribing, get a coffee')
-              .animate()
-              .fadeIn()
-              .shimmer(duration: 200.ms, size: 20);
+              .animate(onPlay: (controller) => controller.repeat())
+              .fadeIn(duration: 900.ms)
+              .then(duration: 900.ms)
+              .fadeOut(duration: 900.ms);
         } else if (data == failedString) {
           timer.cancel();
           return generateText('Error transcribing, try again')
@@ -116,7 +117,7 @@ class _TranscriptionViewState extends ConsumerState<TranscriptionView> {
         } else if (data == emptyResultString) {
           timer.cancel();
           return generateText(
-                  'No transcription retrieved, your yaps were too powerful')
+                  'No transcription retrieved\nYour yaps were too powerful!!')
               .animate()
               .fadeIn();
         }
@@ -169,9 +170,10 @@ class _GenderAnalysisState extends ConsumerState<GenderAnalysis> {
       data: (data) {
         if (data.isEmpty) {
           return generateText("Analyzing gender, what's for dinner")
-              .animate()
-              .fadeIn()
-              .shimmer(duration: 200.ms, size: 20);
+              .animate(onPlay: (controller) => controller.repeat())
+              .fadeIn(duration: 900.ms)
+              .then(duration: 900.ms)
+              .fadeOut(duration: 900.ms);
         } else if (data == failedString) {
           timer.cancel();
           return generateText('Error transcribing, try again')
@@ -180,7 +182,7 @@ class _GenderAnalysisState extends ConsumerState<GenderAnalysis> {
               .shimmer(duration: 200.ms);
         } else if (data == emptyResultString) {
           timer.cancel();
-          return generateText('No gender detected\nYou a bot ?')
+          return generateText('No gender detected\nAre you a robot ?')
               .animate()
               .fadeIn();
         }
