@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 
@@ -39,8 +40,11 @@ class ApiService {
     required String whichJob,
   }) async {
     final response = await dio.get('$basePath/$whichJob/$jobId');
-    print(whichJob);
-    print(response.data);
+    if (kDebugMode) {
+      print(whichJob);
+      print(response.data);
+    }
+
     final status = response.data['status'] as String;
     final result = response.data['result'] as String;
 

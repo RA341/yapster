@@ -4,6 +4,7 @@ import 'package:client/consts.dart';
 import 'package:client/providers.dart';
 import 'package:client/service/api.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -130,9 +131,10 @@ class _TranscriptionViewState extends ConsumerState<TranscriptionView> {
       error: (error, stackTrace) => generateText('Error transcribing\n$error'),
       loading: () {
         return generateText('transcribing, get a coffee')
-            .animate()
-            .fadeIn()
-            .shimmer(duration: 200.ms);
+            .animate(onPlay: (controller) => controller.repeat())
+            .fadeIn(duration: 900.ms)
+            .then(duration: 900.ms)
+            .fadeOut(duration: 900.ms);
       },
     );
   }
@@ -150,7 +152,7 @@ class _GenderAnalysisState extends ConsumerState<GenderAnalysis> {
 
   @override
   void initState() {
-    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+    timer = Timer.periodic(const Duration(milliseconds: 500), (timer) {
       ref.invalidate(genderStatusProvider);
     });
     super.initState();
@@ -176,7 +178,7 @@ class _GenderAnalysisState extends ConsumerState<GenderAnalysis> {
               .fadeOut(duration: 900.ms);
         } else if (data == failedString) {
           timer.cancel();
-          return generateText('Error transcribing, try again')
+          return generateText('Error detecting gender, try again')
               .animate()
               .fadeIn()
               .shimmer(duration: 200.ms);
@@ -194,12 +196,11 @@ class _GenderAnalysisState extends ConsumerState<GenderAnalysis> {
       },
       error: (error, stackTrace) =>
           generateText('Error analyzing gender\n$error'),
-      loading: () {
-        return generateText("Analyzing gender, what's for dinner")
-            .animate()
-            .fadeIn()
-            .shimmer(duration: 200.ms);
-      },
+      loading: () => generateText("Analyzing gender, what's for dinner")
+          .animate(onPlay: (controller) => controller.repeat())
+          .fadeIn(duration: 900.ms)
+          .then(duration: 900.ms)
+          .fadeOut(duration: 900.ms),
     );
   }
 }
