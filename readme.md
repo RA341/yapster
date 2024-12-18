@@ -7,6 +7,7 @@ Hosted instance - [yap.dumbapps.org](https://yap.dumbapps.org)
 ## Technologies
 
 * Python based backend
+   * Django as the web framework    
 
 * Flutter based frontend
 
