@@ -1,31 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="7df6a521-b230-4b48-991a-c316c1615a9b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/MLops/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MLops/.idea/MLops.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MLops/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MLops/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MLops/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MLops/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MLops/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/.idea/backend.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/lib/widgets/mic_controls.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/conventionalCommit.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+    <list default="true" id="7df6a521-b230-4b48-991a-c316c1615a9b" name="Changes" comment="complete docker file">
       <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/yapster.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/yapster.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/.idea/backend.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/.idea/conventionalCommit.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/requirements.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/client/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/client/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/lib/service/microphone_manager.dart" beforeDir="false" afterPath="$PROJECT_DIR$/client/lib/service/microphone_manager.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/web/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/web/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ml/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ml/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ml/voice_gender.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/ml/voice_gender.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/readme.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -33,8 +27,13 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="ChangesViewManager">
+    <option name="groupingKeys">
+      <option value="directory" />
+    </option>
+  </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/backend" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -48,16 +47,23 @@
     <option name="sortByType" value="true" />
     <option name="sortKey" value="BY_TYPE" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "main",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Docker.Dockerfile.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Dev/Python/yapster&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -76,7 +82,28 @@
       <updated>1726351013511</updated>
       <workItem from="1726351015196" duration="242000" />
       <workItem from="1726357886440" duration="183000" />
+      <workItem from="1726636347341" duration="2082000" />
+      <workItem from="1726638901775" duration="1240000" />
+      <workItem from="1726678153323" duration="43000" />
+      <workItem from="1726889448311" duration="2577000" />
+      <workItem from="1727065372352" duration="11000" />
+      <workItem from="1727373672446" duration="125000" />
+      <workItem from="1727382181334" duration="15000" />
+      <workItem from="1727418920890" duration="289000" />
+      <workItem from="1727586139523" duration="5000" />
+      <workItem from="1730255299641" duration="151000" />
+      <workItem from="1732039404611" duration="17000" />
+      <workItem from="1732729819991" duration="705000" />
     </task>
+    <task id="LOCAL-00001" summary="complete docker file">
+      <option name="closed" value="true" />
+      <created>1726637600477</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1726637600477</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -92,5 +119,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="complete docker file" />
+    <option name="LAST_COMMIT_MESSAGE" value="complete docker file" />
   </component>
 </project>

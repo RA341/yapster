@@ -1,13 +1,63 @@
+import pickle
 import uuid
 
+import librosa
 from fastapi import FastAPI, UploadFile, File
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 import os
+from job_queue import JobQueue, Job
+import torch
+from transformers import pipeline, AutoModel, AutoTokenizer
+import python_speech_features as mfcc
+from sklearn import preprocessing
+import numpy as np
 
-from job_queue import JobQueue
+#################################################################################################
+# transcription setup
+save_directory = "model"
+model = AutoModel.from_pretrained(save_directory)
+tokenizer = AutoTokenizer.from_pretrained(save_directory)
+
+device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+print('Model is using', device)
+pipe = pipeline(
+    "automatic-speech-recognition",
+    model="./model",
+    chunk_length_s=30,
+    device=device
+)
+
+
+def run_transcription(job: Job):
+    return pipe(job.audio_path)['text']
+
+#################################################################################################
+# voice gender setup
+gmm_male = pickle.load(open('voice_model/male.gmm','rb'))
+gmm_female = pickle.load(open('voice_model/female.gmm','rb'))
+
+def get_MFCC(sr, audio):
+    features = mfcc.mfcc(audio, sr, 0.025, 0.01, 13, appendEnergy=False)
+    features = preprocessing.scale(features)
+    return features
+
+def run_gender_analysis(job: Job):
+    audio, sample_rate = librosa.load(job.audio_path, res_type='soxr_vhq')
+    features = get_MFCC(sample_rate, audio)
+
+    log_likelihood_male = np.array(gmm_male.score(features)).sum()
+    log_likelihood_female = np.array(gmm_female.score(features)).sum()
+
+    if log_likelihood_male >= log_likelihood_female:
+        return "Male"
+    else:
+        return "Female"
+
+
+#################################################################################################
 
 app = FastAPI()
 
@@ -34,7 +84,8 @@ app.add_middleware(
     allow_headers=["*"],  # Allows all headers
 )
 
-job_queue = JobQueue()
+transcription_queue = JobQueue()
+gender_queue = JobQueue()
 
 # Mount the static directory
 app.mount("/static", StaticFiles(directory=static_dir), name="static")
@@ -61,14 +112,23 @@ async def upload_audio(audio_file: UploadFile = File(...)):
         content = await audio_file.read()
         buffer.write(content)
 
-    job_queue.add_job(print, job_id)
+    gender_queue.add_job(run_gender_analysis, job_id, file_path)
+    transcription_queue.add_job(run_transcription, job_id, file_path)
 
     return JSONResponse(content={"job_id": job_id, "message": "Audio file uploaded successfully"})
 
 
-@app.get('/jobstatus/{job_id}')
+@app.get('/transcription/{job_id}')
 def get_job_status(job_id):
-    status = job_queue.get_job_status(job_id)
+    status = transcription_queue.get_job_status(job_id)
+    if status:
+        return JSONResponse(status)
+    return JSONResponse({"error": "Job not found"}), 403
+
+
+@app.get('/gender/{job_id}')
+def get_job_status(job_id):
+    status = gender_queue.get_job_status(job_id)
     if status:
         return JSONResponse(status)
     return JSONResponse({"error": "Job not found"}), 403

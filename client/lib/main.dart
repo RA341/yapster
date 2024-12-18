@@ -76,13 +76,16 @@ class App extends ConsumerWidget {
                 ),
               ),
               InfoDisplay(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  DiscardButton(),
-                  MicTrackControls(),
-                  UploadAndAnalyzeButton(),
-                ],
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    DiscardButton(),
+                    MicTrackControls(),
+                    UploadAndAnalyzeButton(),
+                  ],
+                ),
               ),
             ],
           ),

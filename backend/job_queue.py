@@ -10,11 +10,12 @@ class JobStatus(Enum):
     FAILED = "failed"
 
 class Job:
-    def __init__(self, func, job_id):
+    def __init__(self, func, job_id, job_path):
         self.func = func
         self.job_id = job_id
         self.status = JobStatus.QUEUED
         self.result = ''
+        self.audio_path = job_path
 
 class JobQueue:
     def __init__(self):
@@ -24,8 +25,8 @@ class JobQueue:
         self.worker_thread.start()
         self.jobs = {}
 
-    def add_job(self, func, job_id):
-        job = Job(func, job_id)
+    def add_job(self, func, job_id, audio_path):
+        job = Job(func, job_id, audio_path)
         self.queue.put(job)
         self.jobs[job.job_id] = job
         return job.job_id
@@ -43,7 +44,7 @@ class JobQueue:
         job = self.jobs.get(job_id)
         if job:
             if not job.result:
-                job.result = 'No response'
+                job.result = '=====++++++[[[[[[empty]]]]]]'
 
             return {
                 "id": job.job_id,
@@ -57,8 +58,7 @@ class JobQueue:
         print(f"Executing job: {job.job_id}")
         job.status = JobStatus.RUNNING
         try:
-            job.result = job.func(job.job_id)
-            time.sleep(20)
+            job.result = job.func(job)
             job.status = JobStatus.COMPLETED
             print(f'Job {job.job_id} completed')
         except Exception as e:
